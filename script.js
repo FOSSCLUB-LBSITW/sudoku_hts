@@ -171,20 +171,43 @@
     }
     
     setupEventListeners() {
+        // ✅ Keyboard input support
         document.addEventListener('keydown', (e) => {
-            if (!this.selectedCell || this.isGameComplete) return;
-            
+            if (this.isGameComplete) return;
+
+            // ✅ Arrow key navigation
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+                if (!this.selectedCell) {
+                    this.selectCell(0, 0);
+                    return;
+                }
+                let { row, col } = this.selectedCell;
+                if (e.key === 'ArrowUp')    row = Math.max(0, row - 1);
+                if (e.key === 'ArrowDown')  row = Math.min(8, row + 1);
+                if (e.key === 'ArrowLeft')  col = Math.max(0, col - 1);
+                if (e.key === 'ArrowRight') col = Math.min(8, col + 1);
+                this.selectCell(row, col);
+                return;
+            }
+
+            if (!this.selectedCell) return;
+
             const { row, col } = this.selectedCell;
             const cellKey = `${row}-${col}`;
             
             if (this.givenCells.has(cellKey)) return;
-            
+
+            // ✅ Number keys 1-9 to fill cell
             if (e.key >= '1' && e.key <= '9') {
                 const num = parseInt(e.key);
                 this.grid[row][col] = num;
                 this.updateCell(row, col, num);
                 this.checkForCompletion();
-            } else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') {
+            }
+            
+            // ✅ Backspace, Delete or 0 to clear cell
+            else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') {
                 this.grid[row][col] = 0;
                 this.updateCell(row, col, 0);
             }
