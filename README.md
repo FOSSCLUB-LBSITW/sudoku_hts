@@ -34,6 +34,12 @@ This project dynamically generates valid Sudoku puzzles, allows user interaction
 
 ---
 
+## Screenshot
+
+![alt text](<Screenshot 2026-02-27 053416.png>)
+
+---
+
 ## 🧮 Core Logic
 
 ### ✔️ Sudoku Generation
