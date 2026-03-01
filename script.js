@@ -214,7 +214,11 @@
         });
         
         document.getElementById('resetBtn').addEventListener('click', () => {
-            this.resetGame();
+            const confirmReset = confirm("Are you sure you want to reset the game?");
+
+            if (confirmReset) {
+                this.resetGame();
+            }
         });
         
         document.getElementById('newGameBtn').addEventListener('click', () => {
